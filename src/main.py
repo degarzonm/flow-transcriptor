@@ -3,4 +3,5 @@ from ws_client import ws_transcriptor
 
 if __name__ == "__main__":
     ws_uri = load_credentials()
-    ws_transcriptor(uri = ws_uri, timeout= 30)
+    tt=ws_transcriptor(uri = ws_uri, timeout= 10,log=True,)
+    print(tt)

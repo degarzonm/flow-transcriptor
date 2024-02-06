@@ -18,4 +18,6 @@ def load_credentials():
     ws_url = "wss://" + ibm_speech_service_wss + "/v1/recognize"
     ws_uri = f"{ws_url}?access_token={ibm_websocket_speech_token}&model={ibm_lang_model}"
 
+    print('URI final: ' + ws_uri[:50] + '....' + ws_uri[-50:])
+    
     return ws_uri

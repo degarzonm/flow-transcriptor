@@ -1,4 +1,5 @@
 import pyaudio
+import json
 from websocket._abnf import ABNF
 
 CHUNK = 1024
@@ -12,16 +13,19 @@ def read_audio(ws, timeout):
     stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
 
     print("* recording")
-    rec = timeout
 
-    for _ in range(0, int(RATE / CHUNK * rec)):
+    for _ in range(0, int(RATE / CHUNK * timeout)):
         data = stream.read(CHUNK)
-        ws.send(data, ABNF.OPCODE_BINARY)
-
+        try:
+            ws.send(data, ABNF.OPCODE_BINARY)
+        except:
+            print('.',end = '')
     stream.stop_stream()
     stream.close()
-    print("* done recording")
 
+    # Send the 'stop' action to indicate that recording is finished
     data = {"action": "stop"}
     ws.send(json.dumps(data).encode('utf8'))
     p.terminate()
+    print("* done recording")
+    ws.close()

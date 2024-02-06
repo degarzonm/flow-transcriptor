@@ -1,0 +1,5 @@
+pyaudio
+websocket-client
+python-dotenv
+ibm-cloud-sdk-core
+json
